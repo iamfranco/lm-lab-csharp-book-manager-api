@@ -107,6 +107,7 @@ public class BookManagerControllerTests
     public void AddBook_Creates_A_Book()
     {
         //Arrange
+        _mockBookManagementService.Setup(b => b.BookExists(4)).Returns(false);
         var newBook = new Book() { Id = 4, Title = "Book Four", Description = "This is the description for Book Four", Author = "Person Four", Genre = Genre.Education };
 
         _mockBookManagementService.Setup(b => b.Create(newBook)).Returns(newBook);
@@ -116,6 +117,22 @@ public class BookManagerControllerTests
 
         //Assert
         result.Should().BeOfType(typeof(ActionResult<Book>));
+    }
+
+    [Test]
+    public void AddBook_With_Book_On_Already_Existing_Id_Should_Return_Conflict()
+    {
+        //Arrange
+        _mockBookManagementService.Setup(b => b.BookExists(4)).Returns(true);
+        var newBook = new Book() { Id = 4, Title = "Book Four", Description = "This is the description for Book Four", Author = "Person Four", Genre = Genre.Education };
+
+        _mockBookManagementService.Setup(b => b.Create(newBook)).Returns(newBook);
+
+        //Act
+        var result = _controller.AddBook(newBook);
+
+        //Assert
+        result.Result.Should().BeOfType(typeof(ConflictResult));
     }
 
     [Test]
