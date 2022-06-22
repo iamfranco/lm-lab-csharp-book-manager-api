@@ -140,12 +140,27 @@ public class BookManagerControllerTests
     {
         // Arrange
         long existingBookId = 3;
+        _mockBookManagementService.Setup(b => b.BookExists(3)).Returns(true);
 
         //Act
         var result = _controller.DeleteBookById(existingBookId);
 
         //Assert
         result.Should().BeOfType(typeof(NoContentResult));
+    }
+
+    [Test]
+    public void DeleteBook_With_NonExistent_Id_Should_Return_NotFound()
+    {
+        // Arrange
+        long existingBookId = 3;
+        _mockBookManagementService.Setup(b => b.BookExists(3)).Returns(false);
+
+        //Act
+        var result = _controller.DeleteBookById(existingBookId);
+
+        //Assert
+        result.Should().BeOfType(typeof(NotFoundResult));
     }
 
     private static List<Book> GetTestBooks()
