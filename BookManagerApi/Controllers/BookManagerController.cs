@@ -26,6 +26,9 @@ namespace BookManagerApi.Controllers
         [HttpGet("{id}")]
         public ActionResult<Book> GetBookById(long id)
         {
+            if (!_bookManagementService.BookExists(id))
+                return NotFound();
+
             var book = _bookManagementService.FindBookById(id);
             return book;
         }
@@ -35,6 +38,9 @@ namespace BookManagerApi.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateBookById(long id, Book book)
         {
+            if (!_bookManagementService.BookExists(id))
+                return NotFound();
+
             _bookManagementService.Update(id, book);
             return NoContent();
         }
@@ -44,8 +50,22 @@ namespace BookManagerApi.Controllers
         [HttpPost]
         public ActionResult<Book> AddBook(Book book)
         {
+            if (_bookManagementService.BookExists(book.Id))
+                return Conflict();
+
             _bookManagementService.Create(book);
             return CreatedAtAction(nameof(GetBookById), new { id = book.Id }, book);
+        }
+
+        // DELETE: api/v1/book/3
+        [HttpDelete("{id}")]
+        public IActionResult DeleteBookById(long id)
+        {
+            if (!_bookManagementService.BookExists(id))
+                return NotFound();
+
+            _bookManagementService.Delete(id);
+            return NoContent();
         }
     }
 }
