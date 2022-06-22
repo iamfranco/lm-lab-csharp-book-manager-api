@@ -26,6 +26,9 @@ namespace BookManagerApi.Controllers
         [HttpGet("{id}")]
         public ActionResult<Book> GetBookById(long id)
         {
+            if (!_bookManagementService.BookExists(id))
+                return NotFound();
+
             var book = _bookManagementService.FindBookById(id);
             return book;
         }
@@ -48,6 +51,7 @@ namespace BookManagerApi.Controllers
             return CreatedAtAction(nameof(GetBookById), new { id = book.Id }, book);
         }
 
+        // DELETE: api/v1/book/3
         [HttpDelete("{id}")]
         public IActionResult DeleteBookById(long id)
         {

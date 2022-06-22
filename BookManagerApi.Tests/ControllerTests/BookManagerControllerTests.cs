@@ -44,6 +44,7 @@ public class BookManagerControllerTests
         //Arrange
         var testBookFound = GetTestBooks().FirstOrDefault();
         _mockBookManagementService.Setup(b => b.FindBookById(1)).Returns(testBookFound);
+        _mockBookManagementService.Setup(b => b.BookExists(1)).Returns(true);
 
         //Act
         var result = _controller.GetBookById(1);
@@ -51,6 +52,19 @@ public class BookManagerControllerTests
         //Assert
         result.Should().BeOfType(typeof(ActionResult<Book>));
         result.Value.Should().Be(testBookFound);
+    }
+
+    [Test]
+    public void GetBookById_With_NonExistent_Id_Should_Return_NotFound()
+    {
+        //Arrange
+        _mockBookManagementService.Setup(b => b.BookExists(10)).Returns(false);
+
+        //Act
+        var result = _controller.GetBookById(10);
+
+        //Assert
+        result.Result.Should().BeOfType(typeof(NotFoundResult));
     }
 
     [Test]
