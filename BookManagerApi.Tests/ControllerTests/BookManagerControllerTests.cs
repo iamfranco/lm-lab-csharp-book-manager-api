@@ -72,6 +72,7 @@ public class BookManagerControllerTests
     {
         //Arrange
         long existingBookId = 3;
+        _mockBookManagementService.Setup(b => b.BookExists(3)).Returns(true);
         Book existingBookFound = GetTestBooks()
             .FirstOrDefault(b => b.Id.Equals(existingBookId));
 
@@ -84,6 +85,22 @@ public class BookManagerControllerTests
 
         //Assert
         result.Should().BeOfType(typeof(NoContentResult));
+    }
+
+    [Test]
+    public void UpdateBookById_With_NonExistent_Id_Should_Return_NotFound()
+    {
+        //Arrange
+        long existingBookId = 10;
+        _mockBookManagementService.Setup(b => b.BookExists(10)).Returns(false);
+
+        var bookUpdates = new Book() { Id = 10, Title = "Book Three", Description = "I am updating this for Book Three", Author = "Person Three", Genre = Genre.Education };
+
+        //Act
+        var result = _controller.UpdateBookById(existingBookId, bookUpdates);
+
+        //Assert
+        result.Should().BeOfType(typeof(NotFoundResult));
     }
 
     [Test]

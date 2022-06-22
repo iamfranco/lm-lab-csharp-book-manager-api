@@ -38,6 +38,9 @@ namespace BookManagerApi.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateBookById(long id, Book book)
         {
+            if (!_bookManagementService.BookExists(id))
+                return NotFound();
+
             _bookManagementService.Update(id, book);
             return NoContent();
         }
