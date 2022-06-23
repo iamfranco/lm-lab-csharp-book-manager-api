@@ -1,16 +1,18 @@
-# 📖 Minimalist Book Manager API - C# ASP.NET Core MVC Web API
+# Minimalist Book Manager API
 
-This is a C# solution for a Book Manager API. The Base URL is `https://localhost:7230/`
+This is a C# ASP.NET Core MVC Web API solution for a Book Manager API.
+
+The Base URL is `https://localhost:7230/`
 
 The API has the following endpoints:
 
-| Action   | Endpoint           | What it does                               |
-| -------- | ------------------ | ------------------------------------------ |
-| `GET`    | `api/v1/book`      | Get All books in collection                |
-| `GET`    | `api/v1/book/{id}` | Get book with id `{id}` from collection    |
-| `POST`   | `api/v1/book`      | Add book to collection                     |
-| `PUT`    | `api/v1/book/{id}` | Update book with id `{id}` from collection |
-| `DELETE` | `api/v1/book/{id}` | Delete book with id `{id}` from collection |
+| Action     | Endpoint           | What it does                                   | API Documentation                                     |
+| ---------- | ------------------ | ---------------------------------------------- | ----------------------------------------------------- |
+| **GET**    | `api/v1/book`      | **Get All** books in collection                | [Click Here](#get-all-books-in-collection)            |
+| **GET**    | `api/v1/book/{id}` | **Get** book with id `{id}` from collection    | [Click Here](#get-book-with-id-id-from-collection)    |
+| **POST**   | `api/v1/book`      | **Add** book to collection                     | [Click Here](#add-book-to-collection)                 |
+| **PUT**    | `api/v1/book/{id}` | **Update** book with id `{id}` from collection | [Click Here](#update-book-with-id-id-from-collection) |
+| **DELETE** | `api/v1/book/{id}` | **Delete** book with id `{id}` from collection | [Click Here](#delete-book-with-id-id-from-collection) |
 
 Here we have 3 folders:
 
