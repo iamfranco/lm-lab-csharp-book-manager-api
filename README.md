@@ -1,51 +1,200 @@
 # 📖 Minimalist Book Manager API - C# ASP.NET Core MVC Web API
 
-## Introduction
-This is the starter repository for the Further APIs session. It provides some starter code to creating a Minimalist Book Manager API with synchronous API endpoints.
+This is a C# solution for a Book Manager API. The Base URL is `https://localhost:7230/`
 
-### Pre-Requisites
-- C# / .NET 6
-- NuGet
+The API has the following endpoints:
 
-### Technologies & Dependencies
-- ASP.NET Core MVC 6 (Web API Project)
-- NUnit testing framework
-- Moq
+| Action   | Endpoint           | What it does                               |
+| -------- | ------------------ | ------------------------------------------ |
+| `GET`    | `api/v1/book`      | Get All books in collection                |
+| `GET`    | `api/v1/book/{id}` | Get book with id `{id}` from collection    |
+| `POST`   | `api/v1/book`      | Add book to collection                     |
+| `PUT`    | `api/v1/book/{id}` | Update book with id `{id}` from collection |
+| `DELETE` | `api/v1/book/{id}` | Delete book with id `{id}` from collection |
 
-### How to Get Started
-- Fork this repo to your Github and then clone the forked version of this repo.
+Here we have 3 folders:
 
-### Main Entry Point
-- The Main Entry Point for the application is: [Program.cs](./BookManagerApi/Program.cs)
+1. The `BookManagerApi` folder contains the C# solution to the challenge
+2. The `BookManagerApi.Tests` folder contains the unit tests for the solution
+3. The `diagrams` folder contains diagrams related to the solution
 
-### Running the Unit Tests
-- You can run the unit tests in Visual Studio, or you can go to your terminal and inside the root of this directory, run:
+# Instructions
 
-`dotnet test`
+**Prerequisite**: The machine running the application should have [.NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) (or above) installed.
 
-### Tasks
+To run the application:
 
-Here are some tasks for you to work on:
+1. clone the repository to your computer
+2. then navigate to the `BookManagerApi` folder (with `cd` command or otherwise)
+3. then run the following command
 
-📘 Discussion Task
+```c#
+dotnet run
+```
 
-Explore the code and make notes on the following features and how it is being implemented in the code. We'd like you to note down what classes and methods are used and how the objects interact.
+# API Documentation
 
-The features are:
-- Get All Books
-- Get a Book by ID
-- Add a Book
-- Update a Book
+## Get All books in collection
 
-📘 Task 1: Implement the following User Story with tests.
+### Request
 
-`User Story: As a user, I want to use the Book Manager API to delete a book using its ID`
+**GET** `api/v1/book`
 
+### Response samples
 
-📘 Extension Task: Oh no! 😭 We've only covered the happy paths in the solution, can you figure out a way
-to add in exception handling to the project? 
+Status Code: `200 OK`
 
-- Clue 1: What if someone wants to add a book with an ID for a book that already exists? How do we handle this gracefully?
+Content type: `application/json`
 
-- Clue 2: What if someone wants to find a book by an ID that doesn't yet exist? 
-  How can we improve the API by handling errors gracefully and show a helpful message to the client?
+```json
+[
+  {
+    "id": 1,
+    "title": "Clean code",
+    "description": "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees. Every year, countless hours and significant resources are lost because of poorly written code. But it doesn't have to be that way.",
+    "author": "Robert Cecil Martin",
+    "genre": "Education"
+  },
+  {
+    "id": 2,
+    "title": "Design Patterns: Elements of Reusable Object-Oriented Software",
+    "description": "Design Patterns: Elements of Reusable Object-Oriented Software is a software engineering book describing software design patterns. The book was written by Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides, with a foreword by Grady Booch.",
+    "author": "Erich Gamma, John Vlissides, Ralph Johnson, Richard Helm",
+    "genre": "Education"
+  }
+]
+```
+
+## Get book with id `{id}` from collection
+
+### Request
+
+**GET** `api/v1/book/{id}`
+
+For example, **GET** `api/v1/book/1`
+
+### Response samples
+
+Status Code: `200 OK`
+
+Content type: `application/json`
+
+```json
+{
+  "id": 1,
+  "title": "Clean code",
+  "description": "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees. Every year, countless hours and significant resources are lost because of poorly written code. But it doesn't have to be that way.",
+  "author": "Robert Cecil Martin",
+  "genre": "Education"
+}
+```
+
+If `{id}` does not match any book id in the collection, then the response status code would be `404 Not Found`.
+
+## Add book to collection
+
+### Request
+
+**POST** `api/v1/book`
+
+with request body
+
+```json
+{
+  "id": 0,
+  "title": "string",
+  "description": "string",
+  "author": "string",
+  "genre": "Thriller"
+}
+```
+
+where the `genre` could be one of the following: `Thriller`,
+`Romance`, `Fantasy`, `Fiction`, `Education`.
+
+For example, the request body could be:
+
+```json
+{
+  "id": 3,
+  "title": "Some Book Title",
+  "description": "Some Book Description",
+  "author": "Some Author",
+  "genre": "Education"
+}
+```
+
+### Response samples
+
+Status Code: `201`
+
+Content type: `application/json`
+
+```json
+{
+  "id": 3,
+  "title": "Some Book Title",
+  "description": "Some Book Description",
+  "author": "Some Author",
+  "genre": "Education"
+}
+```
+
+If Status Code is `201`, then the new book in the request body will be added into the book collection in the data store.
+
+If the request body has an `{id}` matching with an already existing book's id in the collection, then the response code would be `409 Conflict`, and the new book in the request body will **not** be added to the book collection in the data store.
+
+## Update book with id `{id}` from collection
+
+**PUT** `api/v1/book/{id}`
+
+with request body
+
+```json
+{
+  "id": 0,
+  "title": "string",
+  "description": "string",
+  "author": "string",
+  "genre": "Thriller"
+}
+```
+
+where the `genre` could be one of the following: `Thriller`,
+`Romance`, `Fantasy`, `Fiction`, `Education`.
+
+For example, the request body could be:
+
+```json
+{
+  "id": 3,
+  "title": "Some Book Title",
+  "description": "Some Book Description",
+  "author": "Some Author",
+  "genre": "Education"
+}
+```
+
+### Response samples
+
+Status Code: `204`
+
+If status code is `204` then the book in the collection with id matching `{id}` would be updated to match the content of the request body.
+
+If the `{id}` does not match any book id in the collection, then the response status code would be `404 Not Found`, and no modification would be applied to any book in the collection.
+
+## Delete book with id `{id}` from collection
+
+### Request
+
+**DELETE** `api/v1/book/{id}`
+
+For example, **DELETE** `api/v1/book/1`
+
+### Response samples
+
+Status Code: `204`
+
+If status code is `204` then the book in the collection with id matching `{id}` would be delete from the collection in the data store.
+
+If `{id}` does not match any book id in the collection, then the response status code would be `404 Not Found` and none of the books in the collection would get deleted.
