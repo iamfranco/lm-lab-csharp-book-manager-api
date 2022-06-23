@@ -134,7 +134,7 @@ For example, the request body could be:
 
 ### Response samples
 
-Status Code: `201`
+Status Code: `201 Created`
 
 Content type: `application/json`
 
@@ -148,7 +148,7 @@ Content type: `application/json`
 }
 ```
 
-If Status Code is `201`, then the new book in the request body will be added into the book collection in the data store.
+If Status Code is `201 Created`, then the new book in the request body will be added into the book collection in the data store.
 
 If the request body has an `{id}` matching with an already existing book's id in the collection, then the response code would be `409 Conflict`, and the new book in the request body will **not** be added to the book collection in the data store.
 
@@ -189,9 +189,9 @@ For example, the request body could be:
 
 ### Response samples
 
-Status Code: `204`
+Status Code: `204 No Content`
 
-If status code is `204` then the book in the collection with id matching `{id}` would be updated to match the content of the request body.
+If status code is `204 No Content` then the book in the collection with id matching `{id}` would be updated to match the content of the request body.
 
 If the `{id}` does not match any book id in the collection, then the response status code would be `404 Not Found`, and no modification would be applied to any book in the collection.
 
@@ -207,8 +207,8 @@ For example, **DELETE** `api/v1/book/1`
 
 ### Response samples
 
-Status Code: `204`
+Status Code: `204 No Content`
 
-If status code is `204` then the book in the collection with id matching `{id}` would be delete from the collection in the data store.
+If status code is `204 No Content` then the book in the collection with id matching `{id}` would be delete from the collection in the data store.
 
 If `{id}` does not match any book id in the collection, then the response status code would be `404 Not Found` and none of the books in the collection would get deleted.
