@@ -38,6 +38,8 @@ dotnet run
 
 ## Get All books in collection
 
+[[Back To Top]](#minimalist-book-manager-api)
+
 ### Request
 
 **GET** `api/v1/book`
@@ -69,6 +71,8 @@ Content type: `application/json`
 
 ## Get book with id `{id}` from collection
 
+[[Back To Top]](#minimalist-book-manager-api)
+
 ### Request
 
 **GET** `api/v1/book/{id}`
@@ -94,6 +98,8 @@ Content type: `application/json`
 If `{id}` does not match any book id in the collection, then the response status code would be `404 Not Found`.
 
 ## Add book to collection
+
+[[Back To Top]](#minimalist-book-manager-api)
 
 ### Request
 
@@ -148,6 +154,10 @@ If the request body has an `{id}` matching with an already existing book's id in
 
 ## Update book with id `{id}` from collection
 
+[[Back To Top]](#minimalist-book-manager-api)
+
+### Request
+
 **PUT** `api/v1/book/{id}`
 
 with request body
@@ -186,6 +196,8 @@ If status code is `204` then the book in the collection with id matching `{id}` 
 If the `{id}` does not match any book id in the collection, then the response status code would be `404 Not Found`, and no modification would be applied to any book in the collection.
 
 ## Delete book with id `{id}` from collection
+
+[[Back To Top]](#minimalist-book-manager-api)
 
 ### Request
 
