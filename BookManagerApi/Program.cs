@@ -11,8 +11,16 @@ builder.Services.AddControllers();
 
 var connectionString = builder.Configuration.GetConnectionString("BookManagerApi");
 
-builder.Services.AddDbContext<BookContext>(option =>
-    option.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+if (builder.Environment.EnvironmentName == "Testing")
+{
+    builder.Services.AddDbContext<BookContext>(option =>
+        option.UseInMemoryDatabase("BookDb"));
+}
+else
+{
+    builder.Services.AddDbContext<BookContext>(option =>
+        option.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+}
 
 // Configure Swagger/OpenAPI Documentation
 // You can learn more on this link: https://aka.ms/aspnetcore/swashbuckle
@@ -22,7 +30,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Testing")
 {
     app.UseSwagger();
     app.UseSwaggerUI();

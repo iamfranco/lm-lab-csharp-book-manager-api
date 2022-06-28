@@ -24,6 +24,10 @@
     <None Remove="Models\" />
     <None Remove="Services\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="appsettings.Testing.json" />
+  </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Services\" />
