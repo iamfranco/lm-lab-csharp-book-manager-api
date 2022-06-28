@@ -9,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IBookManagementService, BookManagementService>();
 builder.Services.AddControllers();
 
-var connectionString = builder.Configuration.GetConnectionString("BookManagerApi");
 
 if (builder.Environment.EnvironmentName == "Testing")
 {
@@ -18,8 +17,9 @@ if (builder.Environment.EnvironmentName == "Testing")
 }
 else
 {
+    var connectionString = builder.Configuration.GetConnectionString("PostgreSqlBookManagerApi");
     builder.Services.AddDbContext<BookContext>(option =>
-        option.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+        option.UseNpgsql(connectionString));
 }
 
 // Configure Swagger/OpenAPI Documentation
