@@ -22,17 +22,56 @@ Here we have 3 folders:
 
 # Instructions
 
-**Prerequisite**: The machine running the application should have [.NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) (or above) installed.
+**Prerequisite**: The machine running the application should have [.NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) (or above), and [PostgreSQL](https://www.postgresql.org/) installed.
 
-To run the application:
+Clone the repository to your computer.
 
-1. clone the repository to your computer
-2. then navigate to the `BookManagerApi` folder (with `cd` command or otherwise)
-3. then run the following command
+Then navigate to the `BookManagerApi` folder (with `cd` command or otherwise).
 
-```c#
+Then modify the content of `BookManagerApi/appsettings.Development.json` so that it contains the appropriate `ConnectionStrings` with appropriate `username` and `password`.
+
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "ConnectionStrings": {
+    "MySqlBookManagerApi": "server=localhost; database=bookshop; user=bookmanagerapi; password=apiuser123",
+    "PostgreSqlBookManagerApi": "server=localhost; database=bookshop; username=bookmanagerapi; password=apiuser123"
+  }
+}
+```
+
+Then have PostgreSQL running in the background, using Task Manager or otherwise:
+
+![PostgreSQL Task Manager Service](diagrams/postgresTaskManager.png)
+
+Then execute the **migration commands** to create a new database `bookshop` with a table `Books` in your PostgreSQL server:
+
+```
+dotnet ef migrations add InitialCommit
+```
+
+```
+dotnet ef database update
+```
+
+Then run the application:
+
+```
 dotnet run
 ```
+
+So now when you go to [https://localhost:7230/swagger/index.html](https://localhost:7230/swagger/index.html) to see the available endpoints:
+
+![Swagger example](diagrams/swagger.png)
+
+The **Base URL** is [https://localhost:7230/](https://localhost:7230/) so for example in [Postman] we can send GET request to `https://localhost:7230/api/v1/book` to get all books in database (initally empty).
+
+![Postman example](diagrams/postman.png)
 
 # API Documentation
 
