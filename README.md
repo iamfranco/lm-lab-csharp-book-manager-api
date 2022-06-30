@@ -65,11 +65,11 @@ Then run the application:
 dotnet run
 ```
 
-So now when you go to [https://localhost:7230/swagger/index.html](https://localhost:7230/swagger/index.html) to see the available endpoints:
+So now you can go to [https://localhost:7230/swagger/index.html](https://localhost:7230/swagger/index.html) to see the available endpoints:
 
 ![Swagger example](diagrams/swagger.png)
 
-The **Base URL** is [https://localhost:7230/](https://localhost:7230/) so for example in [Postman] we can send GET request to `https://localhost:7230/api/v1/book` to get all books in database (initally empty).
+The **Base URL** is [https://localhost:7230/](https://localhost:7230/) so for example in [Postman](https://www.postman.com/) we can send GET request to `https://localhost:7230/api/v1/book` to get all books in database (initally empty).
 
 ![Postman example](diagrams/postman.png)
 
